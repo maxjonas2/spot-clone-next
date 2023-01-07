@@ -11,13 +11,13 @@ import { Track } from "../data/tracks";
 
 type CurrentTrackInfo = {
   track: Track | null;
-  status: "paused" | "playing";
+  status: boolean;
   trackTimestamp: number;
 };
 
 const initialValue: CurrentTrackInfo = {
   track: null,
-  status: "paused",
+  status: false,
   trackTimestamp: 0,
 };
 
@@ -32,7 +32,7 @@ export const AppContext = createContext<{
 const AppProvider = ({ children }: { children: ReactNode }) => {
   const [currentTrack, setCurrentTrack] = useState<CurrentTrackInfo>({
     track: null,
-    status: "paused",
+    status: false,
     trackTimestamp: 0,
   });
 

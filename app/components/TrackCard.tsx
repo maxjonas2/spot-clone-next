@@ -4,6 +4,7 @@ import { MouseEventHandler, useContext, useEffect } from "react";
 import { FiPlayCircle, FiPause } from "react-icons/fi";
 import { AppContext } from "../contexts/AppContext";
 import type { Track } from "../data/tracks";
+import { print } from "../utils";
 import PictureWithLoader from "./PictureWithLoader";
 
 function secondsToMinutes(duration: number) {
@@ -24,20 +25,17 @@ export default function TrackCard({
   const { currentTrack, setCurrentTrack } = useContext(AppContext);
 
   useEffect(() => {
-    console.log(currentTrack.track?.title + " is on!");
+    console.log(currentTrack);
   }, [currentTrack]);
 
   function handleButtonClick() {
-    console.log(track.title + " clicked");
-    if (currentTrack.track?.id === track?.id) {
-      setCurrentTrack((item) => {
-        return { ...item, status: !currentTrack.status };
-      });
-    } else {
-      setCurrentTrack((item) => {
+    setCurrentTrack((item) => {
+      if (item.track?.id === track?.id) {
+        return { ...item, status: !item.status };
+      } else {
         return { ...item, track, status: true };
-      });
-    }
+      }
+    });
   }
 
   return (
@@ -49,7 +47,10 @@ export default function TrackCard({
         <PictureWithLoader imageSrc={"./assets/tracks/recent/" + track.image} />
         <PlayButton
           onClick={handleButtonClick}
-          isPaused={currentTrack.track === track}
+          showPauseButton={
+            currentTrack.track?.id === track?.id && currentTrack.status === true
+          }
+          track={track}
         />
       </div>
       <figcaption>
@@ -63,17 +64,21 @@ export default function TrackCard({
 const PlayButton = ({
   position = "absolute",
   onClick,
-  isPaused,
+  showPauseButton,
+  track,
 }: {
   position?: "absolute" | "relative";
   onClick?: MouseEventHandler<HTMLButtonElement>;
-  isPaused: boolean;
+  showPauseButton: boolean;
+  track: Track;
 }) => {
-  const className = `play-overlay | ${position} inset-0 z-10 text-2xl text-white bg-black/50 grid place-items-center opacity-0 hover:opacity-100 transition-opacity`;
+  const className = `play-overlay | ${position} inset-0 z-10 text-2xl text-white bg-black/50 grid place-items-center ${
+    showPauseButton ? "opacity-100" : "opacity-0"
+  } hover:opacity-100 transition-opacity`;
 
   return (
     <button className={className} onClick={onClick}>
-      {isPaused ? (
+      {showPauseButton ? (
         <FiPause size={80} color="white" strokeWidth={1} />
       ) : (
         <FiPlayCircle size={80} color="white" strokeWidth={1} />

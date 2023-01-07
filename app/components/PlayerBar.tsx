@@ -1,6 +1,8 @@
 "use client";
 
-import { useRef, useEffect, Dispatch, SetStateAction } from "react";
+import { useRef, useEffect, Dispatch, SetStateAction, useContext } from "react";
+import { AppContext } from "../contexts/AppContext";
+import { Track } from "../data/tracks";
 
 function PlayerBar({
   position = "bottom",
@@ -11,11 +13,24 @@ function PlayerBar({
   time: number;
   setTime: Dispatch<SetStateAction<number>>;
 }) {
+  const { currentTrack, setCurrentTrack } = useContext(AppContext);
+  const { track, status } = currentTrack;
   return (
-    <div className="h-full bg-slate-600 grid-footer flex justify-center items-center gap-4 select-none">
-      <div>Teste</div>
-      <Seeker time={time} setTime={setTime} />
-      <div className="w-8">{((time / 800) * 120).toFixed(2)}</div>
+    <div className="h-full bg-slate-600 grid-footer flex flex-col justify-center items-center">
+      {track && (
+        <div>
+          <span>{track.title}</span>
+          <span> • </span>
+          <span>{track.album}</span>
+          <span> • </span>
+          <span>{status ? "Playing" : "Paused"}</span>
+        </div>
+      )}
+      <div className="flex justify-center items-center gap-4 select-none">
+        <div>Teste</div>
+        <Seeker time={time} setTime={setTime} />
+        <div className="w-8">{((time / 800) * 120).toFixed(2)}</div>
+      </div>
     </div>
   );
 }
