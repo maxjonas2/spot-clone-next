@@ -1,8 +1,7 @@
 "use client";
 
-import { useRef, useEffect, Dispatch, SetStateAction, useContext } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
 import { AppContext } from "../contexts/AppContext";
-import { Track } from "../data/tracks";
 
 function PlayerBar({
   position = "bottom",
@@ -13,7 +12,7 @@ function PlayerBar({
   time: number;
   setTime: Dispatch<SetStateAction<number>>;
 }) {
-  const { currentTrack, setCurrentTrack } = useContext(AppContext);
+  const { currentTrack } = useContext(AppContext);
   const { track, status } = currentTrack;
   return (
     <div className="h-full bg-slate-600 grid-footer flex flex-col justify-center items-center">
@@ -35,17 +34,20 @@ function PlayerBar({
   );
 }
 
+type SetState<T> = Dispatch<SetStateAction<T>>;
+
 function Seeker({
   time,
   setTime,
 }: {
   time: number;
-  setTime: Dispatch<SetStateAction<number>>;
+  setTime: SetState<number>;
 }) {
   const seekerPressedPositiion = useRef<number>(0);
   const seekerPressed = useRef(false);
   const seekerRef = useRef<HTMLDivElement>(null);
 
+  // ! Optimize seeking behavior !
   useEffect(() => {
     seekerRef.current?.addEventListener("mousedown", (e) => {
       seekerPressed.current = true;
@@ -62,13 +64,13 @@ function Seeker({
     document.addEventListener("mouseup", () => {
       seekerPressed.current = false;
     });
-  }, []);
+  }, [time]);
 
   return (
     <div className="seeker-track w-[800px] h-1 bg-white/50 select-none">
       <div className="seeker-elapsed"></div>
       <div
-        className="relative seeker-bullet w-4 h-4 rounded-full bg-white cursor-pointer"
+        className="relative bottom-[6px] seeker-bullet w-4 h-4 rounded-full bg-white cursor-pointer"
         draggable={false}
         ref={seekerRef}
         style={{

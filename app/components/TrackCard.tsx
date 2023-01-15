@@ -1,11 +1,10 @@
 "use client";
 
-import { MouseEventHandler, useContext, useEffect } from "react";
-import { FiPlayCircle, FiPause } from "react-icons/fi";
+import { MouseEventHandler, useContext } from "react";
+import { FiPause, FiPlayCircle } from "react-icons/fi";
 import { AppContext } from "../contexts/AppContext";
-import type { Track } from "../data/tracks";
-import { print } from "../utils";
 import PictureWithLoader from "./PictureWithLoader";
+import type { ITrack } from "../data/tracks";
 
 function secondsToMinutes(duration: number) {
   const minutes = Math.floor(duration / 60);
@@ -17,16 +16,14 @@ export default function TrackCard({
   track,
   index,
 }: {
-  track: Track;
+  track: ITrack;
   index: number;
 }) {
   const { minutes, seconds } = secondsToMinutes(track.duration);
 
-  const { currentTrack, setCurrentTrack } = useContext(AppContext);
+  const { currentTrack, trackInstance } = useContext(AppContext);
 
-  useEffect(() => {
-    console.log(currentTrack);
-  }, [currentTrack]);
+  const { stateSetter: setCurrentTrack } = trackInstance!;
 
   function handleButtonClick() {
     setCurrentTrack((item) => {
@@ -70,7 +67,7 @@ const PlayButton = ({
   position?: "absolute" | "relative";
   onClick?: MouseEventHandler<HTMLButtonElement>;
   showPauseButton: boolean;
-  track: Track;
+  track: ITrack;
 }) => {
   const className = `play-overlay | ${position} inset-0 z-10 text-2xl text-white bg-black/50 grid place-items-center ${
     showPauseButton ? "opacity-100" : "opacity-0"

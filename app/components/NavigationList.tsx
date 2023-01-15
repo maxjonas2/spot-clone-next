@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default () => (
   <nav className="side-nav flow-large w-full border-r border-white h-screen pl-4 pt-4">
     <ul className="flow">
@@ -6,7 +8,7 @@ export default () => (
         <a href="">Playlists</a>
       </li>
       <li>
-        <a href="">Artists</a>
+        <Link href="/artists">Artists</Link>
       </li>
       <li>
         <a href="">Albums</a>
@@ -27,7 +29,7 @@ export default () => (
         <a href="">For You</a>
       </li>
       <li>
-        <a href="">Browse</a>
+        <Link href="/browse">Browse</Link>
       </li>
     </ul>
   </nav>

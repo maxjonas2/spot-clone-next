@@ -1,18 +1,19 @@
-export type Track = {
+export type ITrack = {
   id: number;
   title: string;
   album: string;
   duration: number;
   image: string;
+  src?: string;
 };
 
 export type Tracks = {
   [x: string]: {
-    recent: Track[];
+    recent: ITrack[];
   };
 };
 
-const tracks: Tracks = {
+const rawTracks: Tracks = {
   "1": {
     recent: [
       {
@@ -37,14 +38,14 @@ const tracks: Tracks = {
         image: "diamonds.jpg",
       },
       {
-        id: 5,
+        id: 4,
         title: "Work",
         album: "ANTI",
         duration: 167,
         image: "work.jpg",
       },
       {
-        id: 4,
+        id: 5,
         title: "Rehab",
         album: "Good Girl Gone Bad",
         duration: 171,
@@ -55,35 +56,35 @@ const tracks: Tracks = {
   "2": {
     recent: [
       {
-        id: 1,
+        id: 6,
         title: "All Black",
         album: "All Black",
         duration: 163,
         image: "all-black.jpg",
       },
       {
-        id: 2,
+        id: 7,
         title: "Suicide",
         album: "Suicide",
         duration: 140,
         image: "suicide.jpg",
       },
       {
-        id: 3,
+        id: 8,
         title: "Jaani",
         album: "Jaani Tera Naa",
         duration: 155,
         image: "jaani.jpg",
       },
       {
-        id: 5,
+        id: 9,
         title: "I Need Ya",
         album: "I Need Ya",
         duration: 167,
         image: "needya.jpg",
       },
       {
-        id: 4,
+        id: 10,
         title: "Gallan Terian",
         album: "Qismat",
         duration: 171,
@@ -94,35 +95,35 @@ const tracks: Tracks = {
   "3": {
     recent: [
       {
-        id: 1,
+        id: 11,
         title: "All Black",
         album: "All Black",
         duration: 163,
         image: "all-black.jpg",
       },
       {
-        id: 2,
+        id: 12,
         title: "Suicide",
         album: "Suicide",
         duration: 140,
         image: "suicide.jpg",
       },
       {
-        id: 3,
+        id: 13,
         title: "Jaani",
         album: "Jaani Tera Naa",
         duration: 155,
         image: "jaani.jpg",
       },
       {
-        id: 5,
+        id: 15,
         title: "I Need Ya",
         album: "I Need Ya",
         duration: 167,
         image: "needya.jpg",
       },
       {
-        id: 4,
+        id: 14,
         title: "Gallan Terian",
         album: "Qismat",
         duration: 171,
@@ -133,35 +134,35 @@ const tracks: Tracks = {
   "4": {
     recent: [
       {
-        id: 1,
+        id: 16,
         title: "All Black",
         album: "All Black",
         duration: 163,
         image: "all-black.jpg",
       },
       {
-        id: 2,
+        id: 17,
         title: "Suicide",
         album: "Suicide",
         duration: 140,
         image: "suicide.jpg",
       },
       {
-        id: 3,
+        id: 18,
         title: "Jaani",
         album: "Jaani Tera Naa",
         duration: 155,
         image: "jaani.jpg",
       },
       {
-        id: 5,
+        id: 20,
         title: "I Need Ya",
         album: "I Need Ya",
         duration: 167,
         image: "needya.jpg",
       },
       {
-        id: 4,
+        id: 19,
         title: "Gallan Terian",
         album: "Qismat",
         duration: 171,
@@ -172,35 +173,35 @@ const tracks: Tracks = {
   "5": {
     recent: [
       {
-        id: 1,
+        id: 21,
         title: "All Black",
         album: "All Black",
         duration: 163,
         image: "all-black.jpg",
       },
       {
-        id: 2,
+        id: 22,
         title: "Suicide",
         album: "Suicide",
         duration: 140,
         image: "suicide.jpg",
       },
       {
-        id: 3,
+        id: 23,
         title: "Jaani",
         album: "Jaani Tera Naa",
         duration: 155,
         image: "jaani.jpg",
       },
       {
-        id: 5,
+        id: 25,
         title: "I Need Ya",
         album: "I Need Ya",
         duration: 167,
         image: "needya.jpg",
       },
       {
-        id: 4,
+        id: 26,
         title: "Gallan Terian",
         album: "Qismat",
         duration: 171,
@@ -211,35 +212,35 @@ const tracks: Tracks = {
   "6": {
     recent: [
       {
-        id: 1,
+        id: 27,
         title: "All Black",
         album: "All Black",
         duration: 163,
         image: "all-black.jpg",
       },
       {
-        id: 2,
+        id: 28,
         title: "Suicide",
         album: "Suicide",
         duration: 140,
         image: "suicide.jpg",
       },
       {
-        id: 3,
+        id: 29,
         title: "Jaani",
         album: "Jaani Tera Naa",
         duration: 155,
         image: "jaani.jpg",
       },
       {
-        id: 5,
+        id: 30,
         title: "I Need Ya",
         album: "I Need Ya",
         duration: 167,
         image: "needya.jpg",
       },
       {
-        id: 4,
+        id: 31,
         title: "Gallan Terian",
         album: "Qismat",
         duration: 171,
@@ -248,5 +249,10 @@ const tracks: Tracks = {
     ],
   },
 };
+
+const tracks = rawTracks["1"].recent.map((track, index) => ({
+  ...track,
+  src: index % 2 === 0 ? "generic-song.mp3" : "generic-song-2.mp3",
+}));
 
 export default tracks;

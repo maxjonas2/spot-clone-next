@@ -6,11 +6,15 @@ import {
   useState,
   Dispatch,
   SetStateAction,
+  useEffect,
+  useRef,
 } from "react";
-import { Track } from "../data/tracks";
+import Track from "../../lib/classes/Track";
+import type { ITrack } from "../data/tracks";
+import { print } from "../utils";
 
-type CurrentTrackInfo = {
-  track: Track | null;
+export type CurrentTrackInfo = {
+  track: ITrack | null;
   status: boolean;
   trackTimestamp: number;
 };
@@ -24,9 +28,11 @@ const initialValue: CurrentTrackInfo = {
 export const AppContext = createContext<{
   currentTrack: CurrentTrackInfo;
   setCurrentTrack: Dispatch<SetStateAction<CurrentTrackInfo>>;
+  trackInstance: Track | undefined;
 }>({
   currentTrack: initialValue,
   setCurrentTrack: () => {},
+  trackInstance: undefined,
 });
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
@@ -36,7 +42,21 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     trackTimestamp: 0,
   });
 
-  const ctxValue = { currentTrack, setCurrentTrack };
+  const [trackInstance, setTrackInstance] = useState<Track | undefined>();
+
+  useEffect(() => {
+    setTrackInstance(new Track(setCurrentTrack));
+  }, []);
+
+  useEffect(() => {
+    if (currentTrack.status === true) {
+      trackInstance?.play();
+    } else {
+      trackInstance?.pause();
+    }
+  }, [currentTrack.status]);
+
+  const ctxValue = { currentTrack, setCurrentTrack, trackInstance };
 
   return <AppContext.Provider value={ctxValue}>{children}</AppContext.Provider>;
 };
