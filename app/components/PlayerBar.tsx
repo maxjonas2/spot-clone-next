@@ -64,7 +64,8 @@ function Seeker({
     document.addEventListener("mouseup", () => {
       seekerPressed.current = false;
     });
-  }, [time]);
+ 
+  }, []);
 
   return (
     <div className="seeker-track w-[800px] h-1 bg-white/50 select-none">
