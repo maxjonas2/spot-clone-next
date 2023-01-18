@@ -252,7 +252,7 @@ const rawTracks: Tracks = {
 
 const tracks = rawTracks["1"].recent.map((track, index) => ({
   ...track,
-  src: index % 2 === 0 ? "generic-song.mp3" : "generic-song-2.mp3",
+  src: index % 2 === 0 ? "generic-song.mp3" : "generic-song.mp3",
 }));
 
 export default tracks;
