@@ -2,7 +2,11 @@
 
 import { redirect } from "next/navigation";
 
+// eslint-disable-next-line react/display-name
+
 // This is the index
-export default function RootPage() {
-  redirect("/artists");
+const RootPage : React.FC = () => {
+  redirect('/artists');
 }
+
+export default RootPage;
