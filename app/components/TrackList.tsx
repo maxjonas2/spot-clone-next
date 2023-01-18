@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Track } from "../data/tracks";
 import { getTracksByArtistId } from "../utils";
 import TrackCard from "./TrackCard";
 
+import type { ITrack } from "../data/tracks";
+
 export default function ({ artistId }: { artistId: number }) {
-  const [tracklist, setTracklist] = useState<Track[]>([]);
+  const [tracklist, setTracklist] = useState<ITrack[]>([]);
 
   useEffect(() => {
     console.log("Tracklist mounted");
