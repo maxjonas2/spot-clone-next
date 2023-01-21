@@ -5,6 +5,7 @@ import { FiPause, FiPlayCircle } from "react-icons/fi";
 import { AppContext } from "../contexts/AppContext";
 import PictureWithLoader from "./PictureWithLoader";
 import type { ITrack } from "../data/tracks";
+import tracks from "../data/tracks";
 
 function secondsToMinutes(duration: number) {
   const minutes = Math.floor(duration / 60);
@@ -21,18 +22,15 @@ export default function TrackCard({
 }) {
   const { minutes, seconds } = secondsToMinutes(track.duration);
 
-  const { currentTrack, trackInstance } = useContext(AppContext);
-
-  const { stateSetter: setCurrentTrack } = trackInstance!;
+  const { currentTrack, setCurrentTrack } = useContext(AppContext);
 
   function handleButtonClick() {
-    setCurrentTrack((item) => {
-      if (item.track?.id === track?.id) {
-        return { ...item, status: !item.status };
-      } else {
-        return { ...item, track, status: true };
-      }
-    });
+    if (track.id === currentTrack.track?.id) {
+      setCurrentTrack({ ...currentTrack, status: !currentTrack.status });
+    } else {
+      const ct = tracks.find((t) => t.id === track.id);
+      setCurrentTrack({ ...currentTrack, track: ct! });
+    }
   }
 
   return (
