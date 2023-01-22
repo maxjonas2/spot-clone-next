@@ -22,15 +22,20 @@ export default function TrackCard({
 }) {
   const { minutes, seconds } = secondsToMinutes(track.duration);
 
-  const { currentTrack, setCurrentTrack } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
+
+  const currentTrack = state;
 
   function handleButtonClick() {
-    if (track.id === currentTrack.track?.id) {
+    console.log({ trackId: track.id });
+    dispatch({ type: "CHANGE_TRACK", payload: { id: track.id } });
+
+    /* if (track.id === currentTrack.track?.id) {
       setCurrentTrack({ ...currentTrack, status: !currentTrack.status });
     } else {
       const ct = tracks.find((t) => t.id === track.id);
       setCurrentTrack({ ...currentTrack, track: ct! });
-    }
+    } */
   }
 
   return (

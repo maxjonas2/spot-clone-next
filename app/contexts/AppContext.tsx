@@ -1,18 +1,9 @@
 "use client";
 
-import {
-  createContext,
-  ReactNode,
-  useState,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-} from "react";
-import Track from "../../lib/classes/Track";
+import { createContext, ReactNode, useReducer } from "react";
 import type { ITrack } from "../data/tracks";
-import { print } from "../utils";
 import tracks from "../data/tracks";
+import { getTrackById } from "../utils";
 
 export type CurrentTrackInfo = {
   track: ITrack | null;
@@ -26,27 +17,35 @@ const initialValue: CurrentTrackInfo = {
   trackTimestamp: 0,
 };
 
-export const AppContext = createContext<{
-  currentTrack: CurrentTrackInfo;
-  setCurrentTrack: Dispatch<SetStateAction<CurrentTrackInfo>>;
-}>({
-  currentTrack: initialValue,
-  setCurrentTrack: () => {},
-});
+function audioControllerReducer(state: any, action: any) {
+  switch (action.type) {
+    case "CHANGE_TRACK":
+      const newTrack = getTrackById(action.payload.id);
+      const newCurrentTrack = { ...state, track: newTrack };
+      return newCurrentTrack;
+  }
+}
+
+export const AppContext = createContext<any>(null);
 
 function getInitialTrack(): CurrentTrackInfo {
   return { track: tracks[0], status: false, trackTimestamp: 0 };
 }
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [currentTrack, setCurrentTrack] =
-    useState<CurrentTrackInfo>(getInitialTrack);
+  // const [currentTrack, setCurrentTrack] =
+  //   useState<CurrentTrackInfo>(getInitialTrack);
 
-  useEffect(() => {
-    console.log(currentTrack);
-  }, [currentTrack]);
+  const [state, dispatch] = useReducer(
+    audioControllerReducer,
+    getInitialTrack()
+  );
 
-  const ctxValue = { currentTrack, setCurrentTrack };
+  // useEffect(() => {
+  //   console.log(currentTrack);
+  // }, [currentTrack]);
+
+  const ctxValue = { state, dispatch };
 
   return <AppContext.Provider value={ctxValue}>{children}</AppContext.Provider>;
 };

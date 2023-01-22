@@ -12,8 +12,11 @@ function PlayerBar({
   time: number;
   setTime: Dispatch<SetStateAction<number>>;
 }) {
-  const { currentTrack } = useContext(AppContext);
-  const { track, status } = currentTrack;
+  const { state, dispatch } = useContext(AppContext);
+  const { track, status } = state;
+
+  console.log(track);
+
   return (
     <div className="h-full bg-slate-600 grid-footer flex flex-col justify-center items-center">
       {track && (
@@ -64,7 +67,6 @@ function Seeker({
     document.addEventListener("mouseup", () => {
       seekerPressed.current = false;
     });
- 
   }, []);
 
   return (

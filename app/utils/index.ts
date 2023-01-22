@@ -10,6 +10,11 @@ export function getTracksByArtistId(id: number): Promise<ITrack[]> {
   return new Promise((resolve) => setTimeout(() => resolve(tracklist), 0));
 }
 
+export function getTrackById(id: number) {
+  const track = tracks.find((t) => t.id === id);
+  return track;
+}
+
 export function print(message: string, printFn: Function = console.log) {
   printFn(message);
 }
