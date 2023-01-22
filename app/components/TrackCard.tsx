@@ -27,15 +27,13 @@ export default function TrackCard({
   const currentTrack = state;
 
   function handleButtonClick() {
-    console.log({ trackId: track.id });
     dispatch({ type: "CHANGE_TRACK", payload: { id: track.id } });
 
-    /* if (track.id === currentTrack.track?.id) {
-      setCurrentTrack({ ...currentTrack, status: !currentTrack.status });
+    if (track.id === currentTrack.track?.id) {
+      dispatch({ type: currentTrack.status ? "PAUSE" : "PLAY", payload: {} });
     } else {
-      const ct = tracks.find((t) => t.id === track.id);
-      setCurrentTrack({ ...currentTrack, track: ct! });
-    } */
+      dispatch({ type: "CHANGE_TRACK", payload: { id: track.id } });
+    }
   }
 
   return (

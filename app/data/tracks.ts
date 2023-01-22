@@ -250,9 +250,25 @@ const rawTracks: Tracks = {
   },
 };
 
-const tracks = rawTracks["1"].recent.map((track, index) => ({
-  ...track,
-  src: index % 2 === 0 ? "generic-song.mp3" : "generic-song.mp3",
-}));
+// console.log(
+//   Object.entries(rawTracks)
+//     .map((item) => item[1].recent)
+//     .flat()
+//     .map((track, index) => ({
+//       ...track,
+//       src: index % 2 === 0 ? "generic-song.mp3" : "generic-song.mp3",
+//     }))
+// );
+
+const tracks: { [x: string]: { recent: ITrack[] } } = {};
+
+Object.entries(rawTracks).forEach((track) => {
+  tracks[track[0]] = {
+    recent: track[1].recent.map((t) => ({
+      ...t,
+      src: t.id % 2 === 0 ? "generic-song.mp3" : "generic-song.mp3",
+    })),
+  };
+});
 
 export default tracks;

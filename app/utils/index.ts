@@ -6,12 +6,16 @@ export function getArtists() {
 }
 
 export function getTracksByArtistId(id: number): Promise<ITrack[]> {
-  const tracklist = tracks;
-  return new Promise((resolve) => setTimeout(() => resolve(tracklist), 0));
+  return new Promise((resolve) =>
+    setTimeout(() => resolve(tracks[id].recent), 0)
+  );
 }
 
 export function getTrackById(id: number) {
-  const track = tracks.find((t) => t.id === id);
+  const track = Object.entries(tracks)
+    .map((item) => item[1].recent)
+    .flat()
+    .find((t) => t.id === id);
   return track;
 }
 

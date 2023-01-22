@@ -15,8 +15,6 @@ function PlayerBar({
   const { state, dispatch } = useContext(AppContext);
   const { track, status } = state;
 
-  console.log(track);
-
   return (
     <div className="h-full bg-slate-600 grid-footer flex flex-col justify-center items-center">
       {track && (

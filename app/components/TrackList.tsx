@@ -10,7 +10,6 @@ export default function ({ artistId }: { artistId: number }) {
   const [tracklist, setTracklist] = useState<ITrack[]>([]);
 
   useEffect(() => {
-    console.log("Tracklist mounted");
     getTracksByArtistId(artistId).then((data) => setTracklist(data));
   }, []);
 
