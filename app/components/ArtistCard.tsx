@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useContext, useEffect, useRef } from "react";
 import type { Artist } from "./Artists";
 import { ArtistContext } from "./Artists";
@@ -66,9 +67,11 @@ export default function ArtistCard({ artist }: { artist: Artist }) {
       style={getStyle()}
     >
       <picture className="z-20 relative">
-        <img
-          className="w-48 aspect-square object-cover object-center rounded-t-[.5rem] "
-          src={"./assets/" + artist.image}
+        <Image
+          className="w-[48] aspect-square object-cover object-center rounded-t-[.5rem] "
+          width={192}
+          height={192}
+          src={"http://localhost:3000/assets/" + artist.image}
           alt="Artist picture"
         />
       </picture>

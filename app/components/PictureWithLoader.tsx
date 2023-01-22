@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useState } from "react";
 
 const PictureWithLoader = ({ imageSrc }: { imageSrc: string }) => {
@@ -12,11 +13,13 @@ const PictureWithLoader = ({ imageSrc }: { imageSrc: string }) => {
 
   return (
     <picture className="block absolute inset-0">
-      <img
-        onLoad={() => setImageHasLoaded(true)}
-        src={imageSrc}
+      <Image
+        src={"http://localhost:3000/" + imageSrc}
         className="w-full h-full object-cover object-center rounded-[.5rem]"
-        alt=""
+        fill={true}
+        alt="Something for now"
+        loading="lazy"
+        onLoad={() => setImageHasLoaded(true)}
       />
       <div className={getPlaceholderClassName()}></div>
     </picture>
