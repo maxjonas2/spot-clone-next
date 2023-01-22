@@ -7,6 +7,10 @@ const nextConfig = {
       {
         hostname: "localhost",
       },
+      {
+        hostname: "spot-clone-next.vercel.app",
+        protocol: "https",
+      },
     ],
   },
 };
