@@ -71,7 +71,7 @@ export default function ArtistCard({ artist }: { artist: Artist }) {
           className="w-[48] aspect-square object-cover object-center rounded-t-[.5rem] "
           width={192}
           height={192}
-          src={"http://localhost:3000/assets/" + artist.image}
+          src={"https://spot-clone-next.vercel.app/assets/" + artist.image}
           alt="Artist picture"
         />
       </picture>
