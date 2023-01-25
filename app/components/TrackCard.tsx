@@ -42,7 +42,7 @@ export default function TrackCard({
       style={{ animationDelay: index * 50 + "ms" }}
     >
       <div className="h-40 aspect-square relative block">
-        <PictureWithLoader imageSrc={"./assets/tracks/recent/" + track.image} />
+        <PictureWithLoader imageSrc={"/assets/tracks/recent/" + track.image} />
         <PlayButton
           onClick={handleButtonClick}
           showPauseButton={
