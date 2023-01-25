@@ -14,7 +14,7 @@ const PictureWithLoader = ({ imageSrc }: { imageSrc: string }) => {
   return (
     <picture className="block absolute inset-0">
       <Image
-        src={"https://spot-clone-next.vercel.app/assets/" + imageSrc}
+        src={"https://spot-clone-next.vercel.app/assets/tracks/recent/" + imageSrc}
         className="w-full h-full object-cover object-center rounded-[.5rem]"
         fill={true}
         alt="Something for now"
