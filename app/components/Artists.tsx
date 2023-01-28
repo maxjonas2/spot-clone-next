@@ -7,8 +7,10 @@ import {
   SetStateAction,
   useEffect,
   useState,
+  useRef,
 } from "react";
-import { getArtists } from "../utils";
+import useSwr from "swr";
+import { baseUrl, fetcher, getArtists } from "../utils";
 import ArtistList from "./ArtistList";
 import TrackList from "./TrackList";
 
@@ -25,18 +27,37 @@ export const ArtistContext = createContext<{
 }>({ selectedArtist: null, setSelectedArtist: () => {} });
 
 export default () => {
-  const [artistList, setArtistList] = useState<Artist[]>([]);
+  // const [artistList, setArtistList] = useState<Artist[]>([]);
   const [selectedArtist, setSelectedArtist] = useState<Artist | null>(null);
+  const [artistContainerHeight, setArtistContainerHeight] = useState(32);
+
+  const artistsContainerRef = useRef<HTMLDivElement>(null);
+
+  // useEffect(() => {
+  //   getArtists().then((data) => setArtistList(data as Artist[]));
+  // }, []);
+
+  const { data, error, isLoading } = useSwr(baseUrl + "/api/artists", fetcher);
 
   useEffect(() => {
-    getArtists().then((data) => setArtistList(data as Artist[]));
-  }, []);
+    setArtistContainerHeight(artistsContainerRef.current!.offsetHeight);
+  }, [data]);
 
   function getTranslateString() {
     if (selectedArtist) {
       return `translateY(0)`;
     } else {
       return `translateY(100vh)`;
+    }
+  }
+
+  function renderContent() {
+    if (isLoading) {
+      return <div>Loading</div>;
+    } else if (error) {
+      return <div>There was an error</div>;
+    } else {
+      return <ArtistList artists={data} />;
     }
   }
 
@@ -48,10 +69,8 @@ export default () => {
             <h4 className="text-lg text-orange-500 font-bold">Artists</h4>
             <h2 className="text-xl">Trending Now</h2>
           </div>
-          <div className="p-4">
-            {artistList.length === 0 ? null : (
-              <ArtistList artists={artistList.slice(0, 4)} />
-            )}
+          <div className="artists-container p-4" ref={artistsContainerRef}>
+            {renderContent()}
           </div>
           <div
             className="artist-info absolute inset-0 top-60 p-4 bg-white rounded-t-xl transition-all duration-[400ms]"

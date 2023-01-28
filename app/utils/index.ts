@@ -26,3 +26,10 @@ export function print(message: string, printFn: Function = console.log) {
 export function hashTrack(artistId: number, trackId: number) {
   return parseInt(artistId.toString() + trackId.toString());
 }
+
+export const baseUrl = "http://localhost:3000";
+
+export const hasWindow = () => typeof window !== "undefined";
+
+export const fetcher = (url: string) =>
+  hasWindow() ? fetch(url).then((response) => response.json()) : null;

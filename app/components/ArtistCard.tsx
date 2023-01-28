@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, use } from "react";
 import type { Artist } from "./Artists";
 import { ArtistContext } from "./Artists";
 
@@ -63,7 +63,10 @@ export default function ArtistCard({ artist }: { artist: Artist }) {
     <figure
       className="artist-figure inline-block mr-8 mb-8 cursor-pointer relative transition-all duration-500 scale-100"
       ref={artistCardRef}
-      onClick={() => setSelectedArtist(!selectedArtist ? artist : null)}
+      onClick={() => {
+        setSelectedArtist(!selectedArtist ? artist : null);
+        console.log(artist, "selected");
+      }}
       style={getStyle()}
     >
       <picture className="z-20 relative">
