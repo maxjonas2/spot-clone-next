@@ -5,7 +5,6 @@ import {
   Dispatch,
   Fragment,
   SetStateAction,
-  useEffect,
   useState,
   useRef,
 } from "react";
@@ -27,21 +26,16 @@ export const ArtistContext = createContext<{
 }>({ selectedArtist: null, setSelectedArtist: () => {} });
 
 export default () => {
-  // const [artistList, setArtistList] = useState<Artist[]>([]);
   const [selectedArtist, setSelectedArtist] = useState<Artist | null>(null);
-  const [artistContainerHeight, setArtistContainerHeight] = useState(32);
+  // const [artistContainerHeight, setArtistContainerHeight] = useState(32);
 
   const artistsContainerRef = useRef<HTMLDivElement>(null);
 
-  // useEffect(() => {
-  //   getArtists().then((data) => setArtistList(data as Artist[]));
-  // }, []);
-
-  const { data, error, isLoading } = useSwr(baseUrl + "/api/artists", fetcher);
-
-  useEffect(() => {
-    setArtistContainerHeight(artistsContainerRef.current!.offsetHeight);
-  }, [data]);
+  const {
+    data: artistList,
+    error,
+    isLoading,
+  } = useSwr(baseUrl + "/api/artists", fetcher);
 
   function getTranslateString() {
     if (selectedArtist) {
@@ -57,19 +51,19 @@ export default () => {
     } else if (error) {
       return <div>There was an error</div>;
     } else {
-      return <ArtistList artists={data} />;
+      return <ArtistList artists={artistList} />;
     }
   }
 
   return (
     <Fragment>
       <ArtistContext.Provider value={{ selectedArtist, setSelectedArtist }}>
-        <div className="relative h-full ">
+        <div className="relative h-full overflow-hidden">
           <div className="pl-4">
             <h4 className="text-lg text-orange-500 font-bold">Artists</h4>
             <h2 className="text-xl">Trending Now</h2>
           </div>
-          <div className="artists-container p-4" ref={artistsContainerRef}>
+          <div className={`artists-container p-4`} ref={artistsContainerRef}>
             {renderContent()}
           </div>
           <div
