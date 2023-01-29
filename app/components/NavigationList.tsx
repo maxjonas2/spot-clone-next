@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export default () => (
-  <nav className="side-nav flow-large w-full border-r border-white h-screen pl-4 pt-4">
+  <nav className="side-nav flow-large border-r border-white pl-4 pt-4 fixed">
     <ul className="flow">
       <h3 className="uppercase font-bold title">Library</h3>
       <li>

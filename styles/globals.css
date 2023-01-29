@@ -1,9 +1,23 @@
+:root {
+  --nav-bar-width: 200px;
+}
+
 .app-grid {
   display: grid;
   height: 100vh;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: var(--nav-bar-width) 1fr;
   grid-template-rows: calc(100vh - 50px) 50px;
   grid-template-areas: "nav main" "footer footer";
+}
+
+@media screen and (max-width: 500px) {
+  .app-grid {
+    grid-template-columns: 0px 1fr;
+  }
+
+  .side-nav {
+    transform: translateX(calc(var(--nav-bar-width) * -1));
+  }
 }
 
 .artist-figure {
@@ -35,6 +49,15 @@
 
 .flow-large > * + * {
   margin-top: 2rem;
+}
+
+.section-main {
+  grid-area: main;
+}
+
+.side-nav {
+  width: var(--nav-bar-width);
+  height: calc(100vh - 50px);
 }
 
 .side-nav :is(a, .title) {
