@@ -29,7 +29,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "pages/api/auth/google.ts"  ],
   "exclude": [
     "node_modules"
   ]
